@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BugRadar</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <canvas id="radarCanvas" width="96" height="96" aria-hidden="true"></canvas>
+        <div>
+          <h1>BugRadar</h1>
+        </div>
+      </div>
+      <div class="scoreboard">
+        <span>Total</span>
+        <strong id="totalScore">0</strong>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="controls" aria-label="Challenge controls">
+        <label>
+          Difficulty
+          <select id="difficulty"></select>
+        </label>
+        <label>
+          Language
+          <select id="language"></select>
+        </label>
+        <label>
+          Bug class
+          <select id="bugClass"></select>
+        </label>
+        <label>
+          Backend
+          <select id="provider">
+            <option value="codex">Codex CLI</option>
+            <option value="claude">Claude CLI</option>
+          </select>
+        </label>
+        <button id="generateBtn" type="button">Generate Challenge</button>
+        <p id="providerStatus" class="status">Ready.</p>
+      </section>
+
+      <section class="codePane" aria-label="Challenge source">
+        <div class="challengeHeader">
+          <div>
+            <span id="difficultyBadge" class="badge">easy</span>
+            <span id="languageBadge" class="badge secondary">PHP</span>
+            <h2 id="challengeTitle">Generate a challenge</h2>
+            <p id="challengeDescription">Choose filters, then let the selected LLM generate one complete runnable challenge.</p>
+          </div>
+          <div class="fileActions">
+            <span id="fileName">source</span>
+            <button id="downloadSourceBtn" type="button" disabled>Download Source</button>
+          </div>
+        </div>
+        <pre id="sourceView" class="sourceView"><code>No challenge loaded.</code></pre>
+      </section>
+
+      <aside class="sidePane" aria-label="Answer and trigger panel">
+        <section class="answerPanel">
+          <h2>Answer</h2>
+          <label>
+            Vulnerable line
+            <input id="lineInput" type="number" min="1" placeholder="Click a line or type one">
+          </label>
+          <label>
+            Bug class
+            <select id="answerBugClass"></select>
+          </label>
+          <label>
+            Explanation
+            <textarea id="explanation" rows="6" placeholder="Explain the vulnerable primitive, the failing invariant, and the likely trigger path."></textarea>
+          </label>
+          <div class="buttonRow">
+            <button id="submitBtn" type="button" disabled>Submit</button>
+            <button id="hintBtn" type="button" disabled>Hint</button>
+          </div>
+          <div id="hintBox" class="hintBox" hidden></div>
+          <div id="resultBox" class="resultBox" hidden></div>
+        </section>
+
+        <section class="triggerPanel">
+          <div class="panelTitle">
+            <h2>Trigger</h2>
+            <select id="triggerLanguage">
+              <option value="python">Python</option>
+              <option value="c">C</option>
+            </select>
+          </div>
+          <textarea id="triggerCode" spellcheck="false" placeholder="Generate a challenge to load a trigger scaffold."></textarea>
+          <div class="buttonRow">
+            <button id="validateTriggerBtn" type="button" disabled>Validate Trigger</button>
+            <button id="downloadTriggerBtn" type="button" disabled>Download Trigger</button>
+          </div>
+          <div id="triggerResult" class="resultBox compact" hidden></div>
+        </section>
+      </aside>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
